@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/svg+xml" href="assets/mark.svg">
+<title>AdWorth — Digital marketing, made to be noticed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbfbfd;--surf:#fff;--ink:#1d1d1f;--mute:#5c5c61;--line:#e5e5ea;--acc:#c80046;--btn:#e0005a;--acc-ink:#fff;--grad:linear-gradient(120deg,#ff2d55,#ff0066 45%,#b002b7);--ok:#1a7f37;--bad:#c4281c;--shadow:0 20px 40px -20px rgba(20,30,60,.14);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--surf:#161618;--ink:#f5f5f7;--mute:#a1a1a6;--line:#2c2c2e;--acc:#ff4d86;--btn:#e0005a;--acc-ink:#fff;--ok:#4ac26b;--bad:#ff6b5e;--shadow:0 20px 40px -20px rgba(0,0,0,.6);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#000;--surf:#161618;--ink:#f5f5f7;--mute:#a1a1a6;--line:#2c2c2e;--acc:#ff4d86;--btn:#e0005a;--acc-ink:#fff;--ok:#4ac26b;--bad:#ff6b5e;--shadow:0 20px 40px -20px rgba(0,0,0,.6);color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.5 Geist,-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(20px);z-index:10}
+h1,h2,h3{letter-spacing:-.03em;line-height:1.05;margin:0;font-weight:600}
+a{color:inherit}button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px;border-radius:8px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-weight:700;letter-spacing:-.04em;font-size:21px;text-decoration:none;display:inline-flex;align-items:center;gap:10px}.logo::before{content:"";width:36px;height:24px;background:var(--mark) center/contain no-repeat}.logo i{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.links{display:flex;gap:24px;font-size:14px}.links a{text-decoration:none;color:var(--mute);min-height:44px;display:flex;align-items:center}.links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 22px;border-radius:980px;border:1px solid transparent;background:var(--btn);color:var(--acc-ink);font-weight:500;text-decoration:none;cursor:pointer;transition:transform .2s cubic-bezier(.3,1.4,.5,1),opacity .2s}
+.btn:hover{opacity:.9}.btn:active{transform:scale(.97)}.btn.ghost{background:transparent;color:var(--acc);border-color:var(--line)}.btn.sm{min-height:36px;padding:0 14px;font-size:14px}.btn.danger{background:transparent;color:var(--bad);border-color:var(--line)}
+.hero{min-height:calc(100dvh - 56px);display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:center;padding:56px 0}
+.eyebrow{font-size:14px;font-weight:600;color:var(--acc);letter-spacing:.02em;margin-bottom:16px}
+.hero h1{font-size:clamp(44px,8vw,96px);letter-spacing:-.05em}
+.hero p{color:var(--mute);font-size:clamp(19px,2.2vw,24px);max-width:34ch;margin:24px 0 32px;line-height:1.35}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.art{aspect-ratio:1.5;background:var(--mark) center/contain no-repeat;filter:drop-shadow(0 30px 60px rgba(255,0,102,.32));animation:rise 1.4s cubic-bezier(.2,.9,.3,1) both,float 9s ease-in-out 1.4s infinite}@keyframes rise{from{opacity:0;transform:translate(-30px,40px) scale(.92)}}@keyframes float{50%{transform:translateY(-12px)}}
+section{padding:96px 0}section h2{font-size:clamp(34px,5vw,56px);max-width:16ch}
+.sub{color:var(--mute);font-size:19px;max-width:44ch;margin:16px 0 48px}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.tile{background:var(--surf);border:1px solid var(--line);border-radius:28px;padding:32px;box-shadow:var(--shadow);grid-column:span 2;min-height:230px;display:flex;flex-direction:column;justify-content:flex-end;transition:transform .35s cubic-bezier(.2,.9,.3,1)}
+.tile:hover{transform:translateY(-4px);border-color:var(--acc)}.tile:nth-child(1){grid-column:span 4}.tile:nth-child(4){grid-column:span 4}
+.tile .n{font-size:13px;color:var(--acc);font-weight:600;margin-bottom:auto}.tile h3{font-size:26px;margin-bottom:8px}.tile p{margin:0;color:var(--mute);font-size:16px;max-width:42ch}
+.work{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.work figure{margin:0}.work .ph{aspect-ratio:4/3;border-radius:24px;border:1px solid var(--line);background:var(--surf)}
+.work figure:nth-child(3n+2) .ph{aspect-ratio:3/4}.work figcaption{padding:12px 4px;font-size:15px}.work small{display:block;color:var(--mute)}
+.t0{background:var(--grad)}.t1{background:linear-gradient(160deg,#1c1c1f,#4a4a52)}.t2{background:linear-gradient(135deg,#ff2d55,#ff8aa8)}.t3{background:linear-gradient(135deg,#3a0a4a,#b002b7)}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+form.f{display:grid;gap:18px}.fld{display:grid;gap:8px}.fld label{font-size:14px;font-weight:500}
+input,select,textarea{width:100%;min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surf)}
+textarea{min-height:110px;resize:vertical}.err{color:var(--bad);font-size:13px;min-height:0}.ok{color:var(--ok);font-weight:500}.help{font-size:13px;color:var(--mute)}
+footer{border-top:1px solid var(--line);padding:32px 0;color:var(--mute);font-size:14px}footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.reveal{animation:up .8s cubic-bezier(.2,.9,.3,1) both}@keyframes up{from{opacity:0;transform:translateY(24px)}}
+/* admin */
+.adm{display:grid;grid-template-columns:240px 1fr;min-height:100dvh}
+.side{border-right:1px solid var(--line);padding:24px 16px;position:sticky;top:0;align-self:start;height:100dvh;display:flex;flex-direction:column;gap:4px}
+.side .logo{padding:0 12px 20px}.side button{display:flex;justify-content:space-between;align-items:center;min-height:44px;padding:0 12px;border:0;background:none;border-radius:12px;text-align:left;cursor:pointer;color:var(--mute)}
+.side button[aria-current=page]{background:var(--surf);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line);font-weight:500}.side button:hover{color:var(--ink)}
+.badge{background:var(--btn);color:var(--acc-ink);border-radius:99px;font-size:12px;padding:1px 8px}
+.main{padding:40px clamp(20px,4vw,56px);max-width:960px;width:100%}.main h1{font-size:40px;margin-bottom:8px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:32px 0;border-top:1px solid var(--line)}
+.stat{padding:20px 0;border-bottom:1px solid var(--line)}.stat b{display:block;font-size:48px;letter-spacing:-.04em;font-weight:600}.stat span{color:var(--mute);font-size:14px}
+.list>div{padding:20px 0;border-bottom:1px solid var(--line);display:grid;gap:10px}.list .h{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.pill{font-size:12px;border:1px solid var(--line);padding:2px 10px;border-radius:99px;color:var(--mute)}.pill.new{color:var(--acc);border-color:var(--acc)}
+.panel{border:1px solid var(--line);border-radius:20px;padding:24px;background:var(--surf);margin:24px 0;display:grid;gap:16px}
+.empty{padding:56px 0;text-align:center;color:var(--mute)}.login{min-height:100dvh;display:grid;place-items:center;padding:20px}.login .panel{width:min(400px,100%)}
+.skel{height:18px;border-radius:8px;background:linear-gradient(90deg,var(--line),var(--surf),var(--line));background-size:200% 100%;animation:sh 1.2s infinite;margin:14px 0}@keyframes sh{to{background-position:-200% 0}}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:99px;font-size:14px;z-index:20}
+@media(max-width:820px){.hero,.contact{grid-template-columns:1fr}.art{max-width:340px}.links{display:none}.bento,.work{grid-template-columns:1fr}.tile,.tile:nth-child(n){grid-column:auto}.adm{grid-template-columns:1fr}
+.side{position:static;height:auto;flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px}.side .logo{display:none}.side button{white-space:nowrap;gap:8px}.stats{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+:root{--mark:url(assets/mark.svg)}</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const KEY='adworth:v2';
+const DEF={headline:'Growth you can see.',tag:'AdWorth is a digital marketing agency. Video, design, social and web, built to grow your presence.',email:'hello@adworth.example',
+services:[
+{id:1,t:'Videography',d:'Brand films, reels and product shoots, planned and shot to stop the scroll.'},
+{id:2,t:'Video Editing',d:'Tight cuts, sound and motion for ads, shorts and long-form.'},
+{id:3,t:'Posters & Design',d:'Posters, ads and visual identity with a clear point of view.'},
+{id:4,t:'Social Media Management',d:'Strategy, content calendars, posting and community — handled end to end.'},
+{id:5,t:'Website Development',d:'Fast, beautiful websites that turn attention into enquiries.'}],
+work:[{id:1,t:'Harbour Café Launch',c:'Videography',k:0},{id:2,t:'Nova Fitness Reels',c:'Social Media',k:1},{id:3,t:'Lanka Spice Posters',c:'Design',k:2},{id:4,t:'Greenleaf Website',c:'Website',k:3},{id:5,t:'Coastline Ad Cut',c:'Editing',k:1},{id:6,t:'Bloom Boutique Brand',c:'Design',k:0}],
+inq:[]};
+let S=load(),tab='overview',loading=false;
+function load(){try{const r=localStorage.getItem(KEY);return r?{...DEF,...JSON.parse(r)}:structuredClone(DEF)}catch(e){return structuredClone(DEF)}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=s=>document.querySelector(s);
+const uid=()=>Date.now()+Math.floor(Math.random()*999);
+function toast(m){const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2200)}
+
+function site(){return `
+<nav class="top" aria-label="Main"><div class="wrap"><a class="logo" href="#">Ad<i>Worth</i></a>
+<div class="links"><a href="#services">Services</a><a href="#work">Work</a><a href="#contact">Contact</a></div>
+<a class="btn sm" href="#contact">Start a project</a></div></nav>
+<main>
+<div class="wrap hero"><div class="reveal"><div class="eyebrow">Digital marketing studio</div><h1>${esc(S.headline)}</h1><p>${esc(S.tag)}</p>
+<div class="row"><a class="btn" href="#contact">Start a project</a><a class="btn ghost" href="#work">See our work</a></div></div>
+<div class="art" role="img" aria-label="AdWorth rising arrow mark"></div></div>
+<section id="services"><div class="wrap"><h2>Five ways we grow your brand.</h2><p class="sub">Pick one service or let us run the whole presence.</p>
+<div class="bento">${S.services.map((s,i)=>`<article class="tile reveal" style="animation-delay:${i*80}ms"><span class="n">0${i+1}</span><h3>${esc(s.t)}</h3><p>${esc(s.d)}</p></article>`).join('')||'<p class="empty">Services coming soon.</p>'}</div></div></section>
+<section id="work"><div class="wrap"><h2>Recent work.</h2><p class="sub">A look at what we have made for businesses like yours.</p>
+<div class="work">${S.work.map(w=>`<figure><div class="ph t${w.k%4}" role="img" aria-label="${esc(w.t)} placeholder"></div><figcaption>${esc(w.t)}<small>${esc(w.c)}</small></figcaption></figure>`).join('')||'<p class="empty">Projects coming soon.</p>'}</div></div></section>
+<section id="contact"><div class="wrap contact"><div><h2>Let’s make something people notice.</h2><p class="sub">Tell us about your business. We reply within one working day.</p><p class="help">Or email ${esc(S.email)}</p></div>
+<form class="f" data-form="inquiry" novalidate>
+<div class="fld"><label for="n">Name</label><input id="n" name="name" autocomplete="name" required><div class="err" data-e="name"></div></div>
+<div class="fld"><label for="e">Email</label><input id="e" name="email" type="email" autocomplete="email" inputmode="email" required><div class="err" data-e="email"></div></div>
+<div class="fld"><label for="s">Service</label><select id="s" name="service"><option>Not sure yet</option>${S.services.map(s=>`<option>${esc(s.t)}</option>`).join('')}</select></div>
+<div class="fld"><label for="m">Project details</label><textarea id="m" name="msg" required></textarea><div class="err" data-e="msg"></div></div>
+<button class="btn" type="submit">Send enquiry</button><div class="ok" role="status" id="okmsg"></div></form></div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 AdWorth. All rights reserved.</span><a href="#admin">Admin</a></div></footer>`}
+
+
+const TABS=[['overview','Overview'],['inquiries','Inquiries'],['services','Services'],['work','Work'],['settings','Settings']];
+function admin(){const nw=S.inq.filter(i=>i.s==='new').length;
+return `<div class="adm"><nav class="side" aria-label="Admin"><a class="logo" href="#">Ad<i>Worth</i></a>
+${TABS.map(([k,l])=>`<button data-act="tab" data-k="${k}" ${tab===k?'aria-current="page"':''}>${l}${k==='inquiries'&&nw?`<span class="badge">${nw}</span>`:''}</button>`).join('')}
+<button data-act="out" style="margin-top:auto">View website</button></nav>
+<main class="main">${loading?'<div class="skel" style="width:40%"></div><div class="skel"></div><div class="skel" style="width:80%"></div>':panel()}</main></div>`}
+
+function panel(){
+if(tab==='overview')return `<h1>Overview</h1><p class="help">Your studio at a glance.</p>
+<div class="stats"><div class="stat"><b>${S.inq.length}</b><span>Total enquiries</span></div><div class="stat"><b>${S.services.length}</b><span>Live services</span></div><div class="stat"><b>${S.work.length}</b><span>Portfolio projects</span></div></div>
+<h2 style="font-size:24px">Latest enquiries</h2>${inqList(S.inq.slice(0,3))}`;
+if(tab==='inquiries')return `<h1>Inquiries</h1><p class="help">Messages from your website contact form.</p>${inqList(S.inq)}`;
+if(tab==='services')return `<h1>Services</h1><p class="help">Changes appear on the website instantly.</p>
+<form class="panel" data-form="addsvc" novalidate><h3 style="font-size:18px">Add a service</h3><div class="fld"><label for="at">Title</label><input id="at" name="t"><div class="err" data-e="t"></div></div><div class="fld"><label for="ad">Description</label><textarea id="ad" name="d"></textarea></div><button class="btn sm" style="justify-self:start">Add service</button></form>
+<div class="list">${S.services.map(s=>`<form data-form="editsvc" data-id="${s.id}" novalidate><div class="fld"><label for="t${s.id}">Title</label><input id="t${s.id}" name="t" value="${esc(s.t)}"></div><div class="fld"><label for="d${s.id}">Description</label><textarea id="d${s.id}" name="d">${esc(s.d)}</textarea></div><div class="row"><button class="btn sm">Save</button><button type="button" class="btn sm danger" data-act="delsvc" data-id="${s.id}">Delete</button></div></form>`).join('')||'<div class="empty">No services yet. Add your first one above.</div>'}</div>`;
+if(tab==='work')return `<h1>Work</h1><p class="help">Portfolio projects shown on the website.</p>
+<form class="panel" data-form="addwork" novalidate><h3 style="font-size:18px">Add a project</h3><div class="fld"><label for="wt">Title</label><input id="wt" name="t"><div class="err" data-e="t"></div></div><div class="fld"><label for="wc">Category</label><select id="wc" name="c"><option>Videography</option><option>Editing</option><option>Design</option><option>Social Media</option><option>Website</option></select></div><button class="btn sm" style="justify-self:start">Add project</button></form>
+<div class="list">${S.work.map(w=>`<div><div class="h"><span><b>${esc(w.t)}</b> <span class="pill">${esc(w.c)}</span></span><button class="btn sm danger" data-act="delwork" data-id="${w.id}">Remove</button></div></div>`).join('')||'<div class="empty">No projects yet. Add one above.</div>'}</div>`;
+return `<h1>Settings</h1><p class="help">Homepage text and contact details.</p>
+<form class="panel" data-form="settings" novalidate><div class="fld"><label for="h">Homepage headline</label><input id="h" name="headline" value="${esc(S.headline)}"><div class="err" data-e="headline"></div></div>
+<div class="fld"><label for="tg">Homepage subtext</label><textarea id="tg" name="tag">${esc(S.tag)}</textarea></div>
+<div class="fld"><label for="em">Contact email</label><input id="em" name="email" type="email" value="${esc(S.email)}"></div><button class="btn sm" style="justify-self:start">Save settings</button></form>`}
+
+function inqList(a){return a.length?`<div class="list">${a.map(i=>`<div><div class="h"><span><b>${esc(i.n)}</b> · <a href="mailto:${esc(i.e)}">${esc(i.e)}</a></span><span><span class="pill ${i.s==='new'?'new':''}">${i.s==='new'?'New':'Handled'}</span> <span class="pill">${esc(i.v)}</span></span></div><p style="margin:0">${esc(i.m)}</p><div class="row"><button class="btn sm ghost" data-act="tog" data-id="${i.id}">Mark ${i.s==='new'?'handled':'new'}</button><button class="btn sm danger" data-act="delinq" data-id="${i.id}">Delete</button></div></div>`).join('')}</div>`:`<div class="empty"><b>No enquiries yet.</b><br>New messages from the contact form will appear here.</div>`}
+
+function render(){const a=$('#app'),adm=location.hash==='#admin';document.title=adm?'AdWorth Admin':'AdWorth — Digital marketing, made to be noticed';a.innerHTML=adm?admin():site();if(!adm&&location.hash&&location.hash!=='#')document.getElementById(location.hash.slice(1))?.scrollIntoView()}
+function errs(f,o){f.querySelectorAll('[data-e]').forEach(e=>e.textContent=o[e.dataset.e]||'');const k=Object.keys(o)[0];if(k)f.elements[k]?.focus();return !k}
+const mail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+document.addEventListener('submit',e=>{const f=e.target,k=f.dataset.form;if(!k)return;e.preventDefault();const d=Object.fromEntries(new FormData(f)),v={};
+if(k==='inquiry'){if(!d.name.trim())v.name='Please enter your name.';if(!mail.test(d.email))v.email='Enter a valid email address.';if(!d.msg.trim())v.msg='Tell us a little about your project.';if(!errs(f,v))return;
+S.inq.unshift({id:uid(),n:d.name.trim(),e:d.email.trim(),v:d.service,m:d.msg.trim(),s:'new'});save();f.reset();$('#okmsg').textContent='Thank you — we will be in touch within one working day.';return}
+if(k==='addsvc'){if(!d.t.trim()){v.t='Give the service a title.';errs(f,v);return}S.services.push({id:uid(),t:d.t.trim(),d:d.d.trim()});toast('Service added')}
+if(k==='editsvc'){const s=S.services.find(x=>x.id==f.dataset.id);if(!d.t.trim())return toast('Title cannot be empty');s.t=d.t.trim();s.d=d.d.trim();toast('Saved')}
+if(k==='addwork'){if(!d.t.trim()){v.t='Give the project a title.';errs(f,v);return}S.work.push({id:uid(),t:d.t.trim(),c:d.c,k:S.work.length%4});toast('Project added')}
+if(k==='settings'){if(!d.headline.trim())v.headline='Headline cannot be empty.';if(!errs(f,v))return;Object.assign(S,{headline:d.headline.trim(),tag:d.tag.trim(),email:d.email.trim()});toast('Settings saved')}
+save();render()});
+
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,id=b.dataset.id;
+if(a==='tab')tab=b.dataset.k;
+else if(a==='out'){location.hash='';return}
+else if(a==='delsvc'){if(!confirm('Delete this service?'))return;S.services=S.services.filter(x=>x.id!=id)}
+else if(a==='delwork')S.work=S.work.filter(x=>x.id!=id);
+else if(a==='delinq'){if(!confirm('Delete this enquiry?'))return;S.inq=S.inq.filter(x=>x.id!=id)}
+else if(a==='tog'){const i=S.inq.find(x=>x.id==id);i.s=i.s==='new'?'done':'new'}
+save();render()});
+addEventListener('hashchange',render);render();
+</script>
+</body>
+</html>
