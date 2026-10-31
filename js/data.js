@@ -17,7 +17,8 @@ export const editService=(id,t,d)=>run(sb.from('services').update({title:t,descr
 export const delService=id=>run(sb.from('services').delete().eq('id',id));
 export const setEnq=(id,status)=>run(sb.from('enquiries').update({status}).eq('id',id));
 export const delEnq=id=>run(sb.from('enquiries').delete().eq('id',id));
-export async function addProject(title,category,file){const ext={'image/jpeg':'jpg','image/png':'png','image/webp':'webp','video/mp4':'mp4','video/quicktime':'mov','video/webm':'webm'}[file.type]||'bin',path=`${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
-const up=await sb.storage.from('media').upload(path,file,{contentType:file.type,cacheControl:'31536000'});if(up.error)return up.error.message;
-const err=await run(sb.from('projects').insert({title,category,media_path:path,media_type:file.type.startsWith('video')?'video':'image'}));if(err)await sb.storage.from('media').remove([path]);return err}
+async function upload(file){const ext={'image/jpeg':'jpg','image/png':'png','image/webp':'webp','video/mp4':'mp4','video/quicktime':'mov','video/webm':'webm'}[file.type]||'bin',path=`${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;const up=await sb.storage.from('media').upload(path,file,{contentType:file.type,cacheControl:'31536000'});return up.error?{error:up.error.message}:{path}}
+const kind=f=>f.type.startsWith('video')?'video':'image';
+export async function addProject(title,category,file){const u=await upload(file);if(u.error)return u.error;const err=await run(sb.from('projects').insert({title,category,media_path:u.path,media_type:kind(file)}));if(err)await sb.storage.from('media').remove([u.path]);return err}
+export async function editProject(w,title,category,file){const patch={title,category};let u;if(file){u=await upload(file);if(u.error)return u.error;patch.media_path=u.path;patch.media_type=kind(file)}const err=await run(sb.from('projects').update(patch).eq('id',w.id));if(err){if(u)await sb.storage.from('media').remove([u.path]);return err}if(u&&w.path)await sb.storage.from('media').remove([w.path]);return ''}
 export async function delProject(w){if(w.path)await sb.storage.from('media').remove([w.path]);return run(sb.from('projects').delete().eq('id',w.id))}

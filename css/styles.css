@@ -112,3 +112,13 @@ section h2{font-size:clamp(40px,6vw,84px);line-height:1;max-width:14ch}
 #work,#contact{border-top:1px solid var(--line)}
 footer{overflow:hidden;padding-bottom:0}.big{font-family:var(--serif);font-size:clamp(84px,24vw,340px);line-height:.78;letter-spacing:-.04em;color:color-mix(in srgb,var(--ink) 7%,transparent);margin:40px 0 -.04em;white-space:nowrap;text-align:center;user-select:none}
 .hp{position:absolute;left:-9999px;opacity:0}#app:empty{min-height:100dvh}
+
+/* ---- v3: work grid, hero index, services index, admin edit ---- */
+.work{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px;overflow:visible;margin:0;padding:0;scroll-snap-type:none;align-items:start}
+.work figure{flex:none;width:auto}.work figure:nth-child(n){margin:0}.work figure:nth-child(3n+1) .ph{aspect-ratio:4/5}.work figure:nth-child(3n+2) .ph{aspect-ratio:1}.work figure:nth-child(3n) .ph{aspect-ratio:3/4}
+.idx{display:grid;gap:0;max-width:400px;margin:40px 0 0;border-top:1px solid var(--line)}.idx li{display:flex;align-items:baseline;gap:18px;padding:13px 0;border-bottom:1px solid var(--line)}.idx span{margin:0;min-width:22px}
+.hero .row .btn{flex:1 1 auto;padding:0 20px}
+.sidxw{position:relative;padding-left:30px}.sbar{position:absolute;left:0;top:8px;bottom:8px;width:2px;background:var(--line);border-radius:2px;overflow:hidden}.sbar i{display:block;width:100%;height:100%;background:var(--acc);transform-origin:top;transform:scaleY(0);transition:transform .3s linear}
+.sidx{list-style:none;margin:0;padding:0;display:grid;gap:4px}.sidx button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;min-height:48px;font-family:var(--serif);font-size:clamp(26px,3.4vw,46px);line-height:1.1;color:var(--mute);opacity:.4;transition:opacity .4s,color .4s,transform .6s cubic-bezier(.2,.9,.3,1)}.sidx button.on{opacity:1;color:var(--ink);transform:translateX(10px)}.sidx button:focus-visible{outline:3px solid var(--acc);outline-offset:4px;border-radius:8px}
+.wedit{align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--line)}.wf{flex:1;display:grid;gap:12px;min-width:0}.wedit .thumb{width:72px;height:72px}
+@media(max-width:820px){.steps{min-height:13em}.sidxw{margin-top:8px}.sidx button{font-size:26px;min-height:44px}.wedit{flex-wrap:nowrap}}
