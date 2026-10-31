@@ -1,6 +1,14 @@
 import {S,esc,$,toast,errs,mediaEl,PLAT,PL} from './state.js';
 import * as D from './data.js';
 import {MAX_VIDEO_MB as MAXV} from './config.js';
+const tmo=(p,ms)=>Promise.race([p,new Promise(r=>setTimeout(()=>r('Timed out. Check your connection and try again.'),ms))]);
+let sig='',pending=false,watching=false;
+const sigOf=()=>JSON.stringify([S.headline,S.tag,S.email,S.wa,S.wam,S.soc,S.services,S.work,S.inq]);
+const editing=()=>{const a=document.activeElement;return !!(a&&a.matches&&a.matches('input,textarea,select'))};
+const settle=async()=>{try{await Promise.race([refresh(),new Promise(r=>setTimeout(r,6000))])}catch(e){console.error(e)}sig=sigOf()};
+async function sync(){if(!authed)return;const before=S.inq.length;try{await refresh()}catch(e){return}const n=sigOf();if(n===sig)return;sig=n;if(S.inq.length>before)toast('New enquiry received');if(editing()){pending=true;return}render()}
+document.addEventListener('focusout',()=>{if(pending)setTimeout(()=>{if(!editing()){pending=false;render()}},300)});
+const startWatch=()=>{if(watching)return;watching=true;D.watch(['settings','services','projects','enquiries'],sync)};
 const done=(err,ok)=>err?(console.error(err),toast('Could not save: '+err,true)):toast(ok);
 let tab='overview',loading=false,authed=false;
 const TABS=[['overview','Overview'],['inquiries','Inquiries'],['services','Services'],['work','Work'],['settings','Settings']];
@@ -42,18 +50,19 @@ const loginView=()=>`<div class="login"><form class="panel" data-form="login" no
 const setupView=`<div class="login"><div class="panel"><a class="logo" href="../"><span>Ad<i>Worth</i></span></a><h1 style="font-size:28px">Connect Supabase</h1><p class="help">The admin panel needs a database. Follow the steps in README.md, then paste your project URL and anon key into <b>js/config.js</b>.</p></div></div>`;
 async function refresh(){await Promise.all([D.loadPublic(),D.loadInquiries()])}
 function render(){$('#app').innerHTML=!D.live?setupView:authed?admin():loginView()}
-document.addEventListener('submit',async e=>{const f=e.target,k=f.dataset.form;if(!k)return;e.preventDefault();const d=Object.fromEntries(new FormData(f)),v={};let err='';
-if(k==='login'){const {error}=await D.sb.auth.signInWithPassword({email:d.email.trim(),password:d.pass});if(error){v.pass='Email or password is not correct.';errs(f,v);return}authed=true;await refresh();render();return}
+document.addEventListener('submit',async e=>{const f=e.target,k=f.dataset.form;if(!k)return;e.preventDefault();const btn=f.querySelector('button:not([type=button])'),lab=btn&&btn.textContent;if(btn&&k!=='login'){btn.disabled=true;btn.textContent='Saving…'}try{await handle(f,k)}catch(x){console.error(x);toast('Could not save: '+(x.message||x),true)}finally{if(btn&&btn.isConnected){btn.disabled=false;btn.textContent=lab}}});
+async function handle(f,k){const d=Object.fromEntries(new FormData(f)),v={};let err='';
+if(k==='login'){const {error}=await D.sb.auth.signInWithPassword({email:d.email.trim(),password:d.pass});if(error){v.pass='Email or password is not correct.';errs(f,v);return}authed=true;await settle();render();startWatch();return}
 if(k==='addsvc'){if(!d.t.trim()){v.t='Give the service a title.';errs(f,v);return}err=await D.addService(d.t.trim(),d.d.trim());done(err,'Service added')}
 else if(k==='editsvc'){if(!d.t.trim())return toast('Title cannot be empty');err=await D.editService(f.dataset.id,d.t.trim(),d.d.trim());done(err,'Saved')}
-else if(k==='addwork'||k==='editwork'){const F=d.file,has=F&&F.size,add=k==='addwork';if(!d.t.trim())v.t='Give the project a title.';if(add&&!has)v.file='Choose a photo or an MP4 video.';else if(has)v.file=fileErr(F);if(!v.file)delete v.file;if(!errs(f,v))return;toast(has?'Uploading…':'Saving…');let b=has?F:null;if(b&&/jpeg|png|webp/.test(b.type))b=await shrink(b);err=add?await D.addProject(d.t.trim(),d.c,b):await D.editProject(S.work.find(x=>x.id==f.dataset.id),d.t.trim(),d.c,b);done(err,(add?'Project added':'Saved'))}
+else if(k==='addwork'||k==='editwork'){const F=d.file,has=F&&F.size,add=k==='addwork';if(!d.t.trim())v.t='Give the project a title.';if(add&&!has)v.file='Choose a photo or an MP4 video.';else if(has)v.file=fileErr(F);if(!v.file)delete v.file;if(!errs(f,v))return;toast(has?'Uploading…':'Saving…');let b=has?F:null;if(b&&/jpeg|png|webp/.test(b.type))b=await shrink(b);err=add?await tmo(D.addProject(d.t.trim(),d.c,b),180000):await tmo(D.editProject(S.work.find(x=>x.id==f.dataset.id),d.t.trim(),d.c,b),180000);done(err,(add?'Project added':'Saved'))}
 else if(k==='settings'){if(!d.headline.trim())v.headline='Headline cannot be empty.';const wa=(d.wa||'').replace(/\D/g,'');if((d.wa||'').trim()&&(wa.length<8||wa.length>15))v.wa='Enter the full number with country code, for example 94771234567.';const soc={};for(const p of PLAT){const u=(d['s_'+p]||'').trim();if(!u){soc[p]='';continue}const x=/^https?:\/\//i.test(u)?u:'https://'+u;try{new URL(x);soc[p]=x}catch(e){v['s_'+p]='Enter a valid link.'}}if(!errs(f,v))return;err=await D.saveSettings({headline:d.headline.trim(),tag:d.tag.trim(),email:d.email.trim(),wa,wam:d.wam.trim(),soc});done(err,'Settings saved')}
-await refresh();render()});
+await settle();render()}
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,id=b.dataset.id;let err='';
 if(a==='tab'){tab=b.dataset.k;return render()}if(a==='site'){location.href='../';return}if(a==='out'){await D.sb.auth.signOut();authed=false;return render()}
 if(a==='delsvc'){if(!confirm('Delete this service?'))return;err=await D.delService(id)}
 else if(a==='delwork'){if(!confirm('Remove this project and its file?'))return;err=await D.delProject(S.work.find(x=>x.id==id))}
 else if(a==='delinq'){if(!confirm('Delete this enquiry?'))return;err=await D.delEnq(id)}
 else if(a==='tog'){const i=S.inq.find(x=>x.id==id);err=await D.setEnq(id,i.s==='new'?'done':'new')}else return;
-if(err)toast('Could not save: '+err,true);await refresh();render()});
-(async()=>{if(D.live){const {data}=await D.sb.auth.getSession();if(data.session){authed=true;await refresh()}}render()})();
+if(err)toast('Could not save: '+err,true);await settle();render()});
+(async()=>{if(D.live){const {data}=await D.sb.auth.getSession();if(data.session){authed=true;await settle();startWatch()}}render()})();

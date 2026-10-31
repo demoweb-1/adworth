@@ -22,3 +22,9 @@ const kind=f=>f.type.startsWith('video')?'video':'image';
 export async function addProject(title,category,file){const u=await upload(file);if(u.error)return u.error;const err=await run(sb.from('projects').insert({title,category,media_path:u.path,media_type:kind(file)}));if(err)await sb.storage.from('media').remove([u.path]);return err}
 export async function editProject(w,title,category,file){const patch={title,category};let u;if(file){u=await upload(file);if(u.error)return u.error;patch.media_path=u.path;patch.media_type=kind(file)}const err=await run(sb.from('projects').update(patch).eq('id',w.id));if(err){if(u)await sb.storage.from('media').remove([u.path]);return err}if(u&&w.path)await sb.storage.from('media').remove([w.path]);return ''}
 export async function delProject(w){if(w.path)await sb.storage.from('media').remove([w.path]);return run(sb.from('projects').delete().eq('id',w.id))}
+
+export function watch(tables,cb){if(!live)return;let t,ok=false;const fire=()=>{clearTimeout(t);t=setTimeout(cb,350)};
+const ch=sb.channel('adworth-'+Math.random().toString(36).slice(2));tables.forEach(tb=>ch.on('postgres_changes',{event:'*',schema:'public',table:tb},fire));
+ch.subscribe(s=>{ok=s==='SUBSCRIBED'});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)cb()});
+setInterval(()=>{if(!ok&&!document.hidden)cb()},45000)}
