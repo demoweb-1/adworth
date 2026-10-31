@@ -1,7 +1,9 @@
 // Case-study viewer (full-screen, swipeable) and category filter for the Work grid.
 import {S,esc,$} from './state.js';
 let flt='All',open=null,opener=null,vr=0;
-export function applyFilter(){document.querySelectorAll('.work figure').forEach(f=>{f.hidden=!(flt==='All'||f.dataset.cat===flt)});document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===flt)))}
+function prog(){const r=document.querySelector('.work'),p=document.querySelector('.wprog');if(!r||!p)return;const sw=r.scrollWidth,cw=r.clientWidth;p.hidden=sw<=cw+2;if(p.hidden)return;const i=p.firstElementChild;i.style.width=(cw/sw*100)+'%';i.style.left=(r.scrollLeft/sw*100)+'%'}
+document.addEventListener('scroll',e=>{if(e.target.classList&&e.target.classList.contains('work'))prog()},true);addEventListener('resize',prog);
+export function applyFilter(){document.querySelectorAll('.work figure').forEach(f=>{f.hidden=!(flt==='All'||f.dataset.cat===flt)});document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===flt)));prog()}
 const cur=()=>{const t=document.querySelector('#viewer .vtrack');return t?Math.round(t.scrollLeft/Math.max(1,t.clientWidth)):0};
 function mark(i){const v=$('#viewer');if(!v)return;const n=v.querySelectorAll('.vs').length;v.querySelector('.vcount').textContent=(i+1)+' / '+n;
 v.querySelectorAll('.vthumbs button').forEach((b,k)=>{k===i?b.setAttribute('aria-current','true'):b.removeAttribute('aria-current')});
@@ -21,7 +23,8 @@ const tr=el.querySelector('.vtrack');tr.addEventListener('scroll',()=>{if(!vr)vr
 export function close(){if(history.state&&history.state.v)history.back();else{history.replaceState(null,'','#work');hide();const w=document.getElementById('work');if(w)w.scrollIntoView()}}
 export function route(){const m=/^#project-(\d+)$/.exec(location.hash);if(m){if(open!==+m[1])show(+m[1])}else if(open!==null)hide()}
 document.addEventListener('click',e=>{const t=e.target;if(!t.closest)return;
-const f=t.closest('[data-filter]');if(f){flt=f.dataset.filter;applyFilter();return}
+const f=t.closest('[data-filter]');if(f){flt=f.dataset.filter;applyFilter();const r=document.querySelector('.work');if(r)r.scrollTo({left:0,behavior:'smooth'});return}
+const wd=t.closest('[data-wdir]');if(wd){const r=document.querySelector('.work'),c=r&&r.querySelector('figure:not([hidden])');if(r&&c)r.scrollBy({left:wd.dataset.wdir*(c.offsetWidth+16),behavior:'smooth'});return}
 const o=t.closest('[data-open]');if(o){e.preventDefault();opener=o;history.pushState({v:1},'','#project-'+o.dataset.open);show(+o.dataset.open);return}
 if(t.closest('[data-vclose]')){close();return}
 if(t.closest('[data-vgo]')){e.preventDefault();hide();history.replaceState(null,'','#contact');const c=document.getElementById('contact');if(c)c.scrollIntoView();return}
