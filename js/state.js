@@ -1,0 +1,9 @@
+export const S={headline:'Growth you can see.',tag:'AdWorth is a digital marketing agency. Video, design, social and web, built to grow your presence.',email:'hello@adworth.example',wa:'',wam:'Hi AdWorth, I would like to discuss a project.',soc:{instagram:'',facebook:'',tiktok:'',youtube:'',linkedin:''},
+services:[{id:1,t:'Videography',d:'Brand films, reels and product shoots, planned and shot to stop the scroll.'},{id:2,t:'Video Editing',d:'Tight cuts, sound and motion for ads, shorts and long-form.'},{id:3,t:'Posters & Design',d:'Posters, ads and visual identity with a clear point of view.'},{id:4,t:'Social Media Management',d:'Strategy, content calendars, posting and community, handled end to end.'},{id:5,t:'Website Development',d:'Fast, beautiful websites that turn attention into enquiries.'}],work:[],inq:[]};
+export const PLAT=['instagram','facebook','tiktok','youtube','linkedin'],PL={instagram:'Instagram',facebook:'Facebook',tiktok:'TikTok',youtube:'YouTube',linkedin:'LinkedIn'};
+export const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export const $=s=>document.querySelector(s);
+export const mail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export function toast(m){const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2400)}
+export function errs(f,o){f.querySelectorAll('[data-e]').forEach(e=>e.textContent=o[e.dataset.e]||'');const k=Object.keys(o)[0];if(k)f.elements[k]?.focus();return !k}
+export const mediaEl=(w)=>!w.url?'':w.mt==='video'?`<video src="${esc(w.url)}#t=0.1" muted loop playsinline preload="metadata" aria-label="${esc(w.t)}"></video>`:`<img src="${esc(w.url)}" alt="${esc(w.t)}" loading="lazy" decoding="async">`;

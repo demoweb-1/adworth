@@ -1,22 +1,29 @@
-# AdWorth
+# AdWorth website
 
-Website and admin panel for AdWorth, a digital marketing agency (videography, video editing, posters and design, social media management, websites).
+Static multi-page site (no build step) with a Supabase backend.
 
-## Run locally
+```
+index.html          public website
+admin/index.html    admin panel (Supabase login)
+css/styles.css      design tokens, layout, glass, motion
+js/config.js        Supabase URL and anon key  <- you edit this
+js/data.js          all Supabase reads/writes
+js/state.js         shared state and helpers
+js/site.js          public page rendering and enquiry form
+js/motion.js        scroll and reveal animations
+js/admin.js         admin panel
+supabase/schema.sql tables, security rules, storage bucket, starter content
+DESIGN.md           design system
+```
 
-Static site, no build step. Open `index.html`, or run `python3 -m http.server 8000` in this folder.
+## Setup
 
-## Pages
+1. Create a project at supabase.com.
+2. SQL Editor: paste `supabase/schema.sql` and run it.
+3. Authentication -> Users -> Add user: create your admin email and password.
+4. Authentication -> Sign In / Providers -> Email: turn off "Allow new users to sign up". Any signed-in user is an admin.
+5. Project Settings -> API: copy the Project URL and the anon public key into `js/config.js`.
+6. Push to GitHub, then Settings -> Pages -> deploy from `main`, root folder.
+7. Open `/admin/`, sign in, then add your WhatsApp number, social links and work.
 
-- `/` public website
-- `/#admin` admin panel (services, portfolio, enquiries, homepage text)
-
-## Hosting on GitHub Pages
-
-Repository Settings, Pages, Source: Deploy from a branch, Branch: `main`, folder `/ (root)`.
-
-## Notes
-
-- Admin data and contact form enquiries are saved in each visitor's own browser (localStorage), not shared between devices. Collecting real enquiries needs a backend or database.
-- There is no login, so anyone who opens `/#admin` can use the panel in their own browser. Add authentication before connecting a real database.
-- Brand colors come from the logo: pink #FF0066, magenta #FC027D, purple #B002B7.
+Run locally with `python3 -m http.server 8000` (ES modules need a server, not file://).
