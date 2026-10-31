@@ -42,5 +42,5 @@ if(err){out.className='err';out.textContent='Sorry, that did not send. Please tr
 out.className='ok';out.innerHTML='Thank you — we will be in touch within one working day.'+(S.wa?' <a href="'+esc(waLink(S.wam+'\n\nName: '+d.name+'\nService: '+d.service+'\n'+d.msg))+'" target="_blank" rel="noopener noreferrer">Send it on WhatsApp too</a>':'');f.reset()});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act="snd"]');if(!b)return;const v=b.closest('figure').querySelector('video');if(v){v.muted=!v.muted;b.classList.toggle('on',!v.muted);b.setAttribute('aria-pressed',String(!v.muted))}});
 initDrip();
-loadPublic().catch(()=>{}).finally(()=>{sig=sigOf();render();watch(['settings','services','projects'],sync)});
+loadPublic().catch(()=>{}).finally(()=>{sig=sigOf();render();watch(['settings','services','projects','project_media'],sync)});
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g)return;const st=$('#services'),n=S.services.length;scrollTo({top:st.getBoundingClientRect().top+scrollY+(+g.dataset.go+.5)/n*(st.offsetHeight-innerHeight),behavior:'smooth'})});
