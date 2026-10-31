@@ -4,6 +4,6 @@ export const PLAT=['instagram','facebook','tiktok','youtube','linkedin'],PL={ins
 export const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const $=s=>document.querySelector(s);
 export const mail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-export function toast(m){const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2400)}
+export function toast(m,bad){document.querySelectorAll('.toast').forEach(x=>x.remove());const t=document.createElement('div');t.className='toast'+(bad?' bad':'');t.setAttribute('role',bad?'alert':'status');t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),bad?9000:2600)}
 export function errs(f,o){f.querySelectorAll('[data-e]').forEach(e=>e.textContent=o[e.dataset.e]||'');const k=Object.keys(o)[0];if(k)f.elements[k]?.focus();return !k}
 export const mediaEl=(w)=>!w.url?'':w.mt==='video'?`<video src="${esc(w.url)}#t=0.1" muted loop playsinline preload="metadata" aria-label="${esc(w.t)}"></video>`:`<img src="${esc(w.url)}" alt="${esc(w.t)}" loading="lazy" decoding="async">`;
