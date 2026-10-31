@@ -10,7 +10,7 @@ if(a.data)Object.assign(S,{headline:a.data.headline||S.headline,tag:a.data.tagli
 if(b.data)S.services=b.data.map(r=>({id:r.id,t:r.title,d:r.description||''}));
 if(c.data){const by={};(m.data||[]).forEach(r=>{(by[r.project_id]=by[r.project_id]||[]).push({id:r.id,type:r.type,url:pub(r.path),thumb:r.thumb_path?pub(r.thumb_path):'',caption:r.caption||'',pos:r.position,path:r.path,thumbPath:r.thumb_path})});
 S.work=c.data.map(r=>{let it=by[r.id]||[];if(!it.length&&r.media_path)it=[{id:null,type:r.media_type,url:pub(r.media_path),thumb:'',caption:'',pos:0,path:r.media_path}];const cv=it.find(x=>x.id===r.cover_id)||it[0],ps=cv&&cv.type==='video'&&cv.thumb;
-return {id:r.id,t:r.title,c:r.category,client:r.client||'',result:r.result||'',quote:r.quote||'',by:r.quote_by||'',cover:r.cover_id,items:it,k:r.id%4,mt:cv?(ps?'image':cv.type):'',url:cv?(ps?cv.thumb:(cv.thumb||cv.url)):'',path:r.media_path}})}}
+return {id:r.id,t:r.title,c:r.category,client:r.client||'',result:r.result||'',quote:r.quote||'',by:r.quote_by||'',cover:r.cover_id,items:it,k:r.id%4,mt:cv?cv.type:'',url:cv?(cv.type==='video'?cv.url:(cv.thumb||cv.url)):'',poster:ps||'',path:r.media_path}})}}
 export async function loadInquiries(){const {data}=await sb.from('enquiries').select('*').order('created_at',{ascending:false});S.inq=(data||[]).map(r=>({id:r.id,n:r.name,e:r.email,v:r.service||'',m:r.message,s:r.status}))}
 export const sendEnq=o=>run(sb.from('enquiries').insert(o),1);
 export const saveSettings=o=>run(sb.from('settings').upsert({id:1,headline:o.headline,tagline:o.tag,email:o.email,whatsapp:o.wa,wa_message:o.wam,socials:o.soc}));
