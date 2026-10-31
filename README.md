@@ -27,3 +27,7 @@ DESIGN.md           design system
 7. Open `/admin/`, sign in, then add your WhatsApp number, social links and work.
 
 Run locally with `python3 -m http.server 8000` (ES modules need a server, not file://).
+
+## Live updates
+
+The public site and admin update on their own when content changes. If you set up Supabase before this feature existed, run `supabase/realtime.sql` once in the SQL Editor. Without it the pages still refresh every 45 seconds and when you return to the tab.

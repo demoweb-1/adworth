@@ -21,3 +21,11 @@ create policy "media delete" on storage.objects for delete to authenticated usin
 -- Starting content.
 insert into settings(id,headline,tagline,email,wa_message) values(1,'Growth you can see.','AdWorth is a digital marketing agency. Video, design, social and web, built to grow your presence.','hello@adworth.example','Hi AdWorth, I would like to discuss a project.') on conflict(id) do nothing;
 insert into services(title,description,position) values('Videography','Brand films, reels and product shoots, planned and shot to stop the scroll.',0),('Video Editing','Tight cuts, sound and motion for ads, shorts and long-form.',1),('Posters & Design','Posters, ads and visual identity with a clear point of view.',2),('Social Media Management','Strategy, content calendars, posting and community, handled end to end.',3),('Website Development','Fast, beautiful websites that turn attention into enquiries.',4);
+
+-- Live updates (Supabase Realtime).
+do $$ declare t text; begin
+  foreach t in array array['settings','services','projects','enquiries'] loop
+    begin execute format('alter publication supabase_realtime add table public.%I',t);
+    exception when duplicate_object then null; end;
+  end loop;
+end $$;

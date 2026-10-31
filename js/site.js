@@ -1,6 +1,7 @@
 import {S,esc,$,errs,mail,mediaEl,PLAT,PL} from './state.js';
 import {live,loadPublic,sendEnq,watch} from './data.js';
 import {bind} from './motion.js';
+import {initDrip} from './drip.js';
 const waLink=t=>S.wa?'https://wa.me/'+S.wa+'?text='+encodeURIComponent(t||S.wam||''):'';
 const WAI='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8 8 0 01-11.8 7L4 20l1.5-4.1A8 8 0 1120 11.5z"/><path d="M9.3 8.9c.3 2.1 2.3 4.1 4.5 4.5l1-1.1-1.5-.9-.7.6a3.4 3.4 0 01-1.6-1.6l.6-.7-.9-1.5-1.4 1.7z" fill="currentColor" stroke="none"/></svg>';
 function site(){return `
@@ -40,5 +41,6 @@ const err=live?await sendEnq({name:d.name.trim(),email:d.email.trim(),service:d.
 if(err){out.className='err';out.textContent='Sorry, that did not send. Please try again or message us on WhatsApp.';return}
 out.className='ok';out.innerHTML='Thank you — we will be in touch within one working day.'+(S.wa?' <a href="'+esc(waLink(S.wam+'\n\nName: '+d.name+'\nService: '+d.service+'\n'+d.msg))+'" target="_blank" rel="noopener noreferrer">Send it on WhatsApp too</a>':'');f.reset()});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act="snd"]');if(!b)return;const v=b.closest('figure').querySelector('video');if(v){v.muted=!v.muted;b.classList.toggle('on',!v.muted);b.setAttribute('aria-pressed',String(!v.muted))}});
+initDrip();
 loadPublic().catch(()=>{}).finally(()=>{sig=sigOf();render();watch(['settings','services','projects'],sync)});
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g)return;const st=$('#services'),n=S.services.length;scrollTo({top:st.getBoundingClientRect().top+scrollY+(+g.dataset.go+.5)/n*(st.offsetHeight-innerHeight),behavior:'smooth'})});
